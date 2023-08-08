@@ -6,6 +6,14 @@ package frm;
 
 import java.awt.Color;
 import javax.swing.JTextField;
+import cls.DBConnect;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import org.mindrot.jbcrypt.BCrypt;
+
 
 /**
  *
@@ -89,6 +97,9 @@ public class frmRegister extends javax.swing.JFrame {
         jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTextField3KeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField3KeyReleased(evt);
             }
         });
 
@@ -186,6 +197,10 @@ public class frmRegister extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    Connection conn = null;
+    PreparedStatement ps;
+    ResultSet rs;
+    
     private void jTextField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusGained
         // TODO add your handling code here:
         placeholder(jTextField1, "Ime");
@@ -230,7 +245,43 @@ public class frmRegister extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        System.out.println(validateInput());
+        if(validateInput()&&checkUsername()){
+            try {
+                String sql = "INSERT INTO korisnici(ime, prezime, username, sifra) VALUES (?,?,?,?)";
+                conn = DBConnect.uspostaviKonekciju();
+                ps = conn.prepareStatement(sql);
+                ps.setString(1, jTextField1.getText());
+                ps.setString(2, jTextField2.getText());
+                ps.setString(3, jTextField3.getText());
+                ps.setString(4,BCrypt.hashpw(jPasswordField1.getText(), BCrypt.gensalt(12)));
+                ps.executeUpdate();
+                JOptionPane.showMessageDialog(null, "REGISTRACIJA JE USPJESNO OBAVLJENA", "USPJESNA REGISTRACIJA", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        } else {
+            if(jTextField1.getText().equals("Ime")){
+                JOptionPane.showMessageDialog(null, "UNESI IME");
+                jTextField1.requestFocus();
+                jTextField1.setBackground(Color.red);
+            } else if (jTextField2.getText().equals("Prezime")){
+                JOptionPane.showMessageDialog(null, "UNESI PREZIME");
+                jTextField2.requestFocus();
+                jTextField2.setBackground(Color.red);
+            } else if (jTextField3.getText().equals("Username")){
+                JOptionPane.showMessageDialog(null, "UNESI USERNAME");
+                jTextField3.requestFocus();
+                jTextField3.setBackground(Color.red);
+            } else if (jPasswordField1.getText().equals("password")){
+                JOptionPane.showMessageDialog(null, "UNESI SIFRU");
+                jPasswordField1.requestFocus();
+                jPasswordField1.setBackground(Color.red);
+            } else if (!checkUsername()){
+                JOptionPane.showMessageDialog(null, "USERNAME VEC U UPOTREBI");
+                jTextField3.requestFocus();
+                jTextField3.setBackground(Color.red);
+            }
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
@@ -245,7 +296,9 @@ public class frmRegister extends javax.swing.JFrame {
 
     private void jTextField3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyPressed
         // TODO add your handling code here:
-        redInput(jTextField3, jPasswordField1, evt);
+        if (!checkUsername()) {
+            redInput(jTextField3, jPasswordField1, evt);
+        }        
     }//GEN-LAST:event_jTextField3KeyPressed
 
     private void jPasswordField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyPressed
@@ -262,6 +315,17 @@ public class frmRegister extends javax.swing.JFrame {
         }
     
     }//GEN-LAST:event_jPasswordField1KeyPressed
+
+    private void jTextField3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyReleased
+        // TODO add your handling code here:
+        if(!checkUsername()){
+            jTextField3.setBackground(Color.red);
+            jButton1.setEnabled(false);
+        } else {
+            jTextField3.setBackground(Color.white);
+            jButton1.setEnabled(true);
+        }
+    }//GEN-LAST:event_jTextField3KeyReleased
 
     /**
      * @param args the command line arguments
@@ -334,6 +398,20 @@ public class frmRegister extends javax.swing.JFrame {
                 sljedece.requestFocus();
             }
         }
+    }
+    
+    private boolean checkUsername(){
+        try {
+            String sql = "SELECT * FROM korisnici WHERE username = ?";
+            conn = DBConnect.uspostaviKonekciju();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, jTextField3.getText());
+            rs = ps.executeQuery();
+            return !rs.next();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return false;
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
