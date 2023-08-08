@@ -21,9 +21,9 @@ public class DBConnect {
   public static Connection uspostaviKonekciju(){
       try{
           Class.forName("com.mysql.jdbc.Driver");
-          Connection kon = DriverManager.getConnection(connUrl, connUser, connPassword);
+          Connection conn = DriverManager.getConnection(connUrl, connUser, connPassword);
           //JOptionPane.showMessageDialog(null, "Veza sa bazom podataka je uspostavljena!");
-          return kon;
+          return conn;
       }catch (Exception e){
           JOptionPane.showMessageDialog(null, "Greška u konekciji sa bazom podataka: "+e.getMessage());
           return null;
