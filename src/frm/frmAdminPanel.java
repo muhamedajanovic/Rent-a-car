@@ -164,7 +164,13 @@ public class frmAdminPanel extends javax.swing.JFrame {
             model.addColumn("Dostupan");
             model.addColumn("Cijena");
             while(rs.next()){
-                model.addRow(new String[]{rs.getString("marka"),rs.getString("model"),rs.getString("godiste"),rs.getString("zapremina_motora")+ " cm3",rs.getString("snaga")+" kW",rs.getString("broj_sasije"),rs.getString("dostupan"),rs.getString("cijena")+" €"});
+                String dostupan = "";
+                if (rs.getBoolean("dostupan")) {
+                    dostupan = "✓";
+                } else {
+                    dostupan = "✗"; 
+                }
+                model.addRow(new String[]{rs.getString("marka"),rs.getString("model"),rs.getString("godiste"),rs.getString("zapremina_motora")+ " cm3",rs.getString("snaga")+" kW",rs.getString("broj_sasije"),dostupan,rs.getString("cijena")+" €"});
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
