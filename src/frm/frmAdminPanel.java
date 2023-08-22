@@ -62,6 +62,11 @@ public class frmAdminPanel extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setText("Dodaj novo");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Uredi");
         jButton2.setEnabled(false);
@@ -139,6 +144,16 @@ public class frmAdminPanel extends javax.swing.JFrame {
         // TODO add your handling code here:
         jButton4.doClick();
     }//GEN-LAST:event_formWindowOpened
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        if (tabela.equals("auta")) {
+            new frmAddCar().setVisible(true);
+        } else { 
+            new frmAddRental().setVisible(true);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     Connection conn = null;
     PreparedStatement ps;
