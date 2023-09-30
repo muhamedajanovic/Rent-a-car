@@ -15,6 +15,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import javax.swing.JOptionPane;
@@ -23,18 +25,20 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
  *
  * @author muham
  */
-public class frmAddRental extends javax.swing.JFrame {
+public class frmEditRental extends javax.swing.JFrame {
 
     /**
      * Creates new form frmAddRental
      */
-    public frmAddRental() {
+    public frmEditRental() {
         
         
 
@@ -67,6 +71,7 @@ public class frmAddRental extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -80,7 +85,6 @@ public class frmAddRental extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED, new java.awt.Color(51, 102, 255), null));
 
-        jTextField1.setForeground(new java.awt.Color(153, 153, 153));
         jTextField1.setText("Ime");
         jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -101,7 +105,6 @@ public class frmAddRental extends javax.swing.JFrame {
             }
         });
 
-        jTextField2.setForeground(new java.awt.Color(153, 153, 153));
         jTextField2.setText("Prezime");
         jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -117,7 +120,6 @@ public class frmAddRental extends javax.swing.JFrame {
             }
         });
 
-        jTextField3.setForeground(new java.awt.Color(153, 153, 153));
         jTextField3.setText("Broj telefona");
         jTextField3.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -137,9 +139,9 @@ public class frmAddRental extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("IZNAJMI AUTO");
+        jLabel1.setText("UREDI NAJAM");
 
-        jButton1.setText("DODAJ");
+        jButton1.setText("AZURIRAJ INFORMACIJE O NAJMU");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -172,11 +174,20 @@ public class frmAddRental extends javax.swing.JFrame {
 
         jDateChooser1.setDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 
+        jDateChooser2.setDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+
         jLabel2.setForeground(new java.awt.Color(153, 153, 153));
         jLabel2.setText("Datum pozajmljivanja:");
 
         jLabel3.setForeground(new java.awt.Color(153, 153, 153));
         jLabel3.setText("Datum vracanja:");
+
+        jButton3.setText("IZBRISI");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -186,31 +197,33 @@ public class frmAddRental extends javax.swing.JFrame {
                 .addGap(55, 55, 55)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 19, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel1)
-                        .addGap(68, 68, 68))
+                        .addGap(83, 83, 83))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jDateChooser2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jTextField7)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel4))
                                     .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, 175, Short.MAX_VALUE))))
-                        .addGap(43, 43, 43))))
+                                    .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jDateChooser2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(43, 43, 43))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,15 +250,20 @@ public class frmAddRental extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addGap(18, 30, Short.MAX_VALUE)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57))
+                .addGap(18, 18, 18)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21))
         );
 
-        jButton3.setText("Admin Panel");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButton2.setBackground(new java.awt.Color(255, 0, 51));
+        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("X");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -259,15 +277,15 @@ public class frmAddRental extends javax.swing.JFrame {
                 .addContainerGap(80, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3)
-                .addGap(28, 28, 28))
+                .addComponent(jButton2)
+                .addGap(22, 22, 22))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jButton3)
-                .addGap(53, 53, 53)
+                .addGap(21, 21, 21)
+                .addComponent(jButton2)
+                .addGap(45, 45, 45)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(80, 80, 80))
         );
@@ -289,8 +307,6 @@ public class frmAddRental extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    public static int loggedIn = 0;
-    
     private void izabranoAuto(){
     jComboBox1.addActionListener(new ActionListener() {
             @Override
@@ -490,7 +506,7 @@ public class frmAddRental extends javax.swing.JFrame {
                     String sql = "SELECT * FROM auta WHERE marka = ? AND model = ? AND godiste = ?";
                     conn = DBConnect.uspostaviKonekciju();
                     ps = conn.prepareStatement(sql);
-                    String[] auto = jComboBox1.getSelectedItem().toString().split(" \\| ");
+                     String[] auto = jComboBox1.getSelectedItem().toString().split(" \\| ");
 
 
                     ps.setString(1, auto[0]);
@@ -499,12 +515,16 @@ public class frmAddRental extends javax.swing.JFrame {
                     rs = ps.executeQuery();
                     if(rs.next()){
                         id_auta = rs.getString("id");
-                    }                
+                    }
                 }
                 catch (Exception ex) {
                 }
             try {
-                String sql = "INSERT INTO najmovi(id_auta, ime, prezime, telefon, datum_preuzimanja, datum_vracanja, ukupna_cijena) VALUES (?,?,?,?,?,?,?)";
+                int sr = frmAdminPanel.jTable1.getSelectedRow();
+            String marka = String.valueOf(frmAdminPanel.jTable1.getValueAt(sr, 5));
+                String model = String.valueOf(frmAdminPanel.jTable1.getValueAt(sr, 6));
+                String godiste = String.valueOf(frmAdminPanel.jTable1.getValueAt(sr, 7));
+                String sql = "UPDATE najmovi INNER JOIN auta ON najmovi.id_auta = auta.id SET id_auta=?, ime=?, prezime=?, telefon=?, datum_preuzimanja=?, datum_vracanja=?, ukupna_cijena=? WHERE marka = ? AND model = ? AND godiste = ?";
                 conn = DBConnect.uspostaviKonekciju();
                 ps = conn.prepareStatement(sql);
                 ps.setString(1, id_auta);
@@ -514,13 +534,16 @@ public class frmAddRental extends javax.swing.JFrame {
                 ps.setString(5, new SimpleDateFormat("yyyy-MM-dd").format(jDateChooser1.getDate()));
                 ps.setString(6, new SimpleDateFormat("yyyy-MM-dd").format(jDateChooser2.getDate()));
                 ps.setString(7, jTextField7.getText().split(" ")[2]);
+                ps.setString(8, marka);
+                ps.setString(9, model);
+                ps.setString(10, godiste);
                 ps.executeUpdate();
                 
                 sql = "UPDATE auta SET dostupan=0 WHERE id = ?";
                 ps = conn.prepareStatement(sql);
                 ps.setString(1, id_auta);
                 ps.executeUpdate();
-                JOptionPane.showMessageDialog(null, "AUTO JE USPJESNO REZERVISANO", "USPJESNO REZERVISANO", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "INFORMACIJE O NAJMU SU PROMIJENJENE", "USPJESNO PROMIJENJENO", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e);
             }
@@ -570,6 +593,12 @@ public class frmAddRental extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField7KeyReleased
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        new frmAdminPanel().setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
         ukupnaCijenaAuto(jDateChooser1);
@@ -578,31 +607,73 @@ public class frmAddRental extends javax.swing.JFrame {
         
         try {
             conn = DBConnect.uspostaviKonekciju();
+            int sr = frmAdminPanel.jTable1.getSelectedRow();
+            String marka = String.valueOf(frmAdminPanel.jTable1.getValueAt(sr, 5));
+            String model = String.valueOf(frmAdminPanel.jTable1.getValueAt(sr, 6));
+            String godiste = String.valueOf(frmAdminPanel.jTable1.getValueAt(sr, 7));
+            ps = conn.prepareStatement("UPDATE auta SET dostupan = 1 WHERE marka = ? AND model = ? and godiste = ?");
+            ps.setString(1, marka);
+            ps.setString(2, model);
+            ps.setString(3, godiste);
+            ps.executeUpdate();
             ps = conn.prepareStatement("SELECT * FROM auta WHERE dostupan = 1");
+            
             rs = ps.executeQuery();
             while(rs.next()){
                 jComboBox1.addItem(rs.getString("marka")+" | "+rs.getString("model")+" | "+rs.getString("godiste"));
             }
+            System.out.println(marka);
+            conn = DBConnect.uspostaviKonekciju();
+            ps = conn.prepareStatement("SELECT * FROM najmovi INNER JOIN auta ON najmovi.id_auta = auta.id WHERE marka = ? AND model = ? and godiste = ?");
+            ps.setString(1, marka);
+            ps.setString(2, model);
+            ps.setString(3, godiste);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                jTextField1.setText(rs.getString("ime"));
+                jTextField2.setText(rs.getString("prezime"));
+                jTextField3.setText(rs.getString("telefon"));
+                
+                String datum = rs.getString("datum_vracanja");
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = dateFormat.parse(datum);
+                jDateChooser2.setDate(date);
+                datum = rs.getString("datum_preuzimanja");
+                dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                date = dateFormat.parse(datum);
+                jDateChooser1.setDate(date);
+                jComboBox1.setSelectedItem(rs.getString("marka")+" | "+rs.getString("model")+" | "+rs.getString("godiste"));
+                
+            }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
+        } catch (ParseException ex) {
+            Logger.getLogger(frmEditRental.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        LocalDate currentDate = LocalDate.now();
-
-        Date date = Date.from(currentDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        Date tomorrow = Date.from(currentDate.plusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant());
-        jDateChooser1.setDate(date);
-        jDateChooser2.setDate(tomorrow);
     }//GEN-LAST:event_formWindowOpened
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false);
-        if(loggedIn == 0){
-            new frmLogin().setVisible(true);
-        } else {
-            new frmAdminPanel().setVisible(true);
-        }
+         try {
+                int sr = frmAdminPanel.jTable1.getSelectedRow();
+            String marka = String.valueOf(frmAdminPanel.jTable1.getValueAt(sr, 5));
+                String model = String.valueOf(frmAdminPanel.jTable1.getValueAt(sr, 6));
+                String godiste = String.valueOf(frmAdminPanel.jTable1.getValueAt(sr, 7));
+                String sql = "DELETE FROM najmovi WHERE id_auta IN (SELECT auta.id FROM auta WHERE marka = ? AND model = ? AND godiste = ?)";
+                
+                conn = DBConnect.uspostaviKonekciju();
+                ps = conn.prepareStatement(sql);
+                ps.setString(1, marka);
+                ps.setString(2, model);
+                ps.setString(3, godiste);
+                ps.executeUpdate();
+                JOptionPane.showMessageDialog(null, "PODACI O NAJMU SU USPJESNO IZBRISANI", "USPJESNO IZBRISANO", JOptionPane.INFORMATION_MESSAGE);
+                this.setVisible(false);
+                new frmAdminPanel().setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
@@ -622,26 +693,28 @@ public class frmAddRental extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmAddRental.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmEditRental.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmAddRental.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmEditRental.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmAddRental.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmEditRental.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmAddRental.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmEditRental.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmAddRental().setVisible(true);
+                new frmEditRental().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
     private com.toedter.calendar.JDateChooser jDateChooser1;

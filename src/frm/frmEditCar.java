@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -16,12 +17,12 @@ import javax.swing.JTextField;
  *
  * @author muham
  */
-public class frmAddCar extends javax.swing.JFrame {
+public class frmEditCar extends javax.swing.JFrame {
 
     /**
      * Creates new form frmAddCar
      */
-    public frmAddCar() {
+    public frmEditCar() {
         initComponents();
     }
 
@@ -48,16 +49,22 @@ public class frmAddCar extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 255));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED, new java.awt.Color(51, 102, 255), null));
 
-        jTextField1.setForeground(new java.awt.Color(153, 153, 153));
         jTextField1.setText("Marka");
         jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -78,7 +85,6 @@ public class frmAddCar extends javax.swing.JFrame {
             }
         });
 
-        jTextField2.setForeground(new java.awt.Color(153, 153, 153));
         jTextField2.setText("Model");
         jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -94,7 +100,6 @@ public class frmAddCar extends javax.swing.JFrame {
             }
         });
 
-        jTextField3.setForeground(new java.awt.Color(153, 153, 153));
         jTextField3.setText("Godiste");
         jTextField3.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -114,16 +119,15 @@ public class frmAddCar extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("DODAJ AUTO");
+        jLabel1.setText("UREDI AUTO");
 
-        jButton1.setText("DODAJ");
+        jButton1.setText("AZURIRAJ INFORMACIJE O AUTU");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jTextField4.setForeground(new java.awt.Color(153, 153, 153));
         jTextField4.setText("Zapremina motora");
         jTextField4.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -142,7 +146,6 @@ public class frmAddCar extends javax.swing.JFrame {
             }
         });
 
-        jTextField5.setForeground(new java.awt.Color(153, 153, 153));
         jTextField5.setText("Snaga");
         jTextField5.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -161,7 +164,6 @@ public class frmAddCar extends javax.swing.JFrame {
             }
         });
 
-        jTextField6.setForeground(new java.awt.Color(153, 153, 153));
         jTextField6.setText("Broj sasije");
         jTextField6.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -180,7 +182,6 @@ public class frmAddCar extends javax.swing.JFrame {
             }
         });
 
-        jTextField7.setForeground(new java.awt.Color(153, 153, 153));
         jTextField7.setText("Cijena");
         jTextField7.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -205,41 +206,59 @@ public class frmAddCar extends javax.swing.JFrame {
 
         jLabel4.setText("€");
 
+        jButton3.setText("IZBRISI");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nije dostupan", "Dostupan" }));
+        jComboBox1.setSelectedIndex(1);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(80, 80, 80))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(55, Short.MAX_VALUE)
+                .addGap(52, 52, 52)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel4)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(80, 80, 80))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(55, 55, 55))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(55, 55, 55))
+                                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel4))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(17, 17, 17)
+                                        .addComponent(jLabel2)))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                            .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 38, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -266,9 +285,13 @@ public class frmAddCar extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addGap(18, 30, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         jButton2.setBackground(new java.awt.Color(255, 0, 51));
@@ -417,7 +440,11 @@ public class frmAddCar extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(validateInput()){
             try {
-                String sql = "INSERT INTO auta(marka, model, godiste, zapremina_motora, snaga, broj_sasije, cijena) VALUES (?,?,?,?,?,?,?)";
+                int sr = frmAdminPanel.jTable1.getSelectedRow();
+                String marka = String.valueOf(frmAdminPanel.jTable1.getValueAt(sr, 0));
+                String model = String.valueOf(frmAdminPanel.jTable1.getValueAt(sr, 1));
+                String godiste = String.valueOf(frmAdminPanel.jTable1.getValueAt(sr, 2));
+                String sql = "UPDATE auta SET marka=?, model=?, godiste=?, zapremina_motora=?, snaga=?, broj_sasije=?, dostupan=?, cijena=? WHERE marka=? AND model=? AND godiste=?";
                 conn = DBConnect.uspostaviKonekciju();
                 ps = conn.prepareStatement(sql);
                 ps.setString(1, jTextField1.getText());
@@ -426,12 +453,17 @@ public class frmAddCar extends javax.swing.JFrame {
                 ps.setString(4, jTextField4.getText());
                 ps.setString(5, jTextField5.getText());
                 ps.setString(6, jTextField6.getText());
-                ps.setString(7, jTextField7.getText());
+                ps.setString(7, String.valueOf(jComboBox1.getSelectedIndex()));
+                ps.setString(8, jTextField7.getText());
+                ps.setString(9, marka);
+                ps.setString(10, model);
+                ps.setString(11, godiste);
                 ps.executeUpdate();
-                JOptionPane.showMessageDialog(null, "AUTO JE USPJESNO UBACENO U BAZU PODATAKA", "USPJESNO DODANO", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "PODACI O AUTU SU PROMIJENJENI", "USPJESNO PROMIJENJENO", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e);
             }
+            
         } else {
             if(jTextField1.getText().equals("Marka")){
                 JOptionPane.showMessageDialog(null, "UNESI MARKU");
@@ -563,6 +595,62 @@ public class frmAddCar extends javax.swing.JFrame {
         new frmAdminPanel().setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        int potvrda = JOptionPane.showConfirmDialog(null, "Da li zelite obrisati ovo vozilo iz baze?");
+        if(potvrda == 0){
+            try {
+                int sr = frmAdminPanel.jTable1.getSelectedRow();
+                String marka = String.valueOf(frmAdminPanel.jTable1.getValueAt(sr, 0));
+                String model = String.valueOf(frmAdminPanel.jTable1.getValueAt(sr, 1));
+                String godiste = String.valueOf(frmAdminPanel.jTable1.getValueAt(sr, 2));
+                conn = DBConnect.uspostaviKonekciju();
+                ps = conn.prepareStatement("DELETE FROM auta WHERE marka = ? AND model = ? AND  godiste = ?");
+                ps.setString(1, marka);
+                ps.setString(2, model);
+                ps.setString(3, godiste);
+                ps.executeUpdate();
+                JOptionPane.showMessageDialog(null, "AUTO USPJESNO IZBRISANO IZ BAZE");
+                this.setVisible(false);
+                new frmAdminPanel().setVisible(true);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        try {
+            int sr = frmAdminPanel.jTable1.getSelectedRow();
+            String marka = String.valueOf(frmAdminPanel.jTable1.getValueAt(sr, 0));
+            String model = String.valueOf(frmAdminPanel.jTable1.getValueAt(sr, 1));
+            String godiste = String.valueOf(frmAdminPanel.jTable1.getValueAt(sr, 2));
+            conn = DBConnect.uspostaviKonekciju();
+            ps = conn.prepareStatement("SELECT * FROM auta WHERE marka = ? AND model = ? AND  godiste = ?");
+            ps.setString(1, marka);
+            ps.setString(2, model);
+            ps.setString(3, godiste);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                jTextField1.setText(rs.getString("marka"));
+                jTextField2.setText(rs.getString("model"));
+                jTextField3.setText(rs.getString("godiste"));
+                jTextField4.setText(rs.getString("zapremina_motora"));
+                jTextField5.setText(rs.getString("snaga"));
+                jTextField6.setText(rs.getString("broj_sasije"));
+                jTextField7.setText(rs.getString("cijena"));
+                if(rs.getString("dostupan").equals("1")){
+                    jComboBox1.setSelectedItem("Dostupan");
+                } else {
+                    jComboBox1.setSelectedItem("Nije dostupan");
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_formWindowOpened
+
     /**
      * @param args the command line arguments
      */
@@ -580,20 +668,21 @@ public class frmAddCar extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmAddCar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmEditCar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmAddCar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmEditCar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmAddCar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmEditCar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmAddCar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmEditCar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmAddCar().setVisible(true);
+                new frmEditCar().setVisible(true);
             }
         });
     }
@@ -601,6 +690,8 @@ public class frmAddCar extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
